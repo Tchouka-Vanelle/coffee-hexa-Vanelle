@@ -5,6 +5,7 @@ import org.formation.coffee.domain.model.Coffee;
 import org.formation.coffee.infrastructure.persistence.entity.CoffeeEntity;
 import org.formation.coffee.infrastructure.persistence.repository.CoffeeJpaRepository;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 @Component
 public class CoffeePersistenceAdapter
@@ -34,5 +35,18 @@ public class CoffeePersistenceAdapter
                 entity.getName(),
                 entity.getPrice()
         );
+    }
+
+    @Override
+    public List<Coffee> findAll() {
+
+        return repository.findAll()
+                .stream()
+                .map(entity -> new Coffee(
+                        entity.getId(),
+                        entity.getName(),
+                        entity.getPrice()
+                ))
+                .toList();
     }
 }
